@@ -32,7 +32,10 @@ class Ship:
     def history_part(self, old_part, new_part):
         list_modif = f"cette piece :  {old_part} a ete remplacer par celle ci :{new_part}, "
         self.history.append(list_modif)
-        print(self.history)
+        
+    def display_history(self):
+        for i in race_ship.history:
+            print(i)
 
     def replace_part(self, part_name, new_part):
         dict_part = self.get_part()
@@ -66,5 +69,4 @@ race_ship.replace_part(part1.name, part4)
 race_ship.display_state()
 race_ship.display_speed()
 
-for i in race_ship.history:
-    print(i)
+race_ship.display_history()
