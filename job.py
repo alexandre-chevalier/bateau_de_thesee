@@ -8,42 +8,51 @@ class Part:
 
     def __str__(self):
         return f"name_material : {self.name}, new_material : {self.materials}"
-        
+
+    def __repr__(self):
+        return f"Part(name={self.name}, materials={self.materials})"
+
+
 class Ship:
-    def __init__(self, name, part):
+    def __init__(self, name):
         self.name =name
-        self.__part = part
+        self.__part = {}
 
     def get_part(self):
         return self.__part
     
-    def set_part(self, part):
-        self.__part = part
+    def add_part(self, part):
+        self.get_part()[part.name] = part
+        
 
     def display_state(self):
-        return f"name : {self.name}, part : {self.get_part()}"
+        parts = ', '.join(str(part) for part in self.__part.values())
+        return f"Name: {self.name}, Parts: [{parts}]"
 
     def replace_part(self, part_name, new_part):
         dict_part = self.get_part()
-        print(dict_part)
+        if part_name in dict_part:
+            dict_part[part_name] = new_part
+        else:
+            print(f"cette piece {part_name} n'a pas ete trouvé")
         
+
+
 class RacingShip(Ship):
-    def __init__(self, name, part, speed):
-        super().__init__(name, part)
+    def __init__(self, name, speed):
+        super().__init__(name)
         self.speed = speed
     
     def display_speed(self):
         print( self.display_state() + f", la vitesse maximale est de : {self.speed}")
         
-
-
-
 part1 = Part("mat", "bois")
 part2 = Part("voile", "tissu")
-race_ship = RacingShip("argonaute",part1, 15)
+part3 = Part("ancre", "soie")
+race_ship = RacingShip("argonaute", 15)
 
-race_ship.set_part(part1)
-race_ship.set_part(part2)
-
+race_ship.add_part(part1)
+race_ship.add_part(part2)
+race_ship.replace_part(part2.name, part3)
 race_ship.display_state()
 race_ship.display_speed()
